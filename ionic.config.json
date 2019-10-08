@@ -1,0 +1,7 @@
+{
+  "name": "melbourne-grafiti",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

@@ -1,0 +1,32 @@
+ion-content .popup {
+    .header {
+      background-color: #023E58;
+      color: white;
+      text-align: center;
+      padding: 8px;
+      h4 {
+        margin-top: 5px;
+        margin-bottom: 5px;
+      }
+    }
+    .body {
+      padding-left: 22px;
+      padding-right: 22px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+
+      ion-button {
+        display: block;
+        margin-top: 20px;
+      }
+    }
+}
+
+.popup input {
+    border: 1px solid black;
+    margin-bottom: 8px;
+}
+
+.popup ion-button {
+  text-align: center;
+}

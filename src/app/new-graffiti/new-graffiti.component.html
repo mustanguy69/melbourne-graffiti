@@ -1,0 +1,25 @@
+<ion-content>
+  <div class="popup">
+    <div class="header">
+        <h4 *ngIf="status == 0">Add a new graffiti</h4>
+        <h4 *ngIf="status == 1">Success !</h4>
+    </div>
+    <div class="body">
+      <div *ngIf="status == 0">
+        <p>Are you in front of a new grafiti ? Register-it now ;)</p>
+        <img *ngIf="base64Image" [src]="base64Image"/>
+        <ion-button *ngIf="!base64Image" color="medium" size="large" (click)="cropUpload()">
+          <ion-icon slot="icon-only" name="camera"></ion-icon>
+        </ion-button>
+
+        <ion-input [(ngModel)]="name" placeholder="Name of the graffiti"></ion-input>
+        <ion-input [(ngModel)]="artist" placeholder="Artist of the graffiti"></ion-input>
+        <ion-textarea [(ngModel)]="description" rows="3" placeholder="Description of the graffiti"></ion-textarea>
+        <ion-button (click)="createNewGrafiti()" type="submit">Send</ion-button>
+      </div>
+      <div *ngIf="status == 1">
+          <h2>Congrats bud !</h2>
+      </div>
+    </div>
+  </div>
+</ion-content>
