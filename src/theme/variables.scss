@@ -10,10 +10,9 @@
 	   --width: 85%;
   }
 
-  .popover-content {
-    top: 20px !important;
+  .gmnoprint {
+    display: none !important;
   }
-
   /** primary **/
   --ion-color-primary: #023E58;
   --ion-color-primary-rgb: 56, 128, 255;

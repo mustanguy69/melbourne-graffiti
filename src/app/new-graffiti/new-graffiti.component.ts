@@ -84,6 +84,7 @@ export class NewGraffitiComponent implements OnInit {
 
   async createNewGrafiti() {
 
+    this.showLoader();
     // Destination URL
     let url = 'http://139.99.97.36:8080/api/graffiti';
 
@@ -107,18 +108,17 @@ export class NewGraffitiComponent implements OnInit {
 
     let fileTransfer: FileTransferObject = this.transfer.create();
 
-    this.showLoader();
+
 
     fileTransfer.upload(targetPath, url, options)
     .then((res) => {
       this.status = 1;
       console.log(res);
-      this.hideLoader();
     }).catch((error) => {
       console.log(error);
       this.error = "Something wrong happened, try again !";
-      this.hideLoader();
-    });
+
+    }).finally(() => { this.hideLoader(); });
   }
 
   showLoader() {

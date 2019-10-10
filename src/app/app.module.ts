@@ -14,7 +14,6 @@ import { HTTP } from '@ionic-native/http/ngx';
 
 import { MapsProviderService } from './maps-provider.service';
 import { JsMapsProviderService } from './js-maps-provider.service';
-import { NativeMapsProviderService } from './native-maps-provider.service';
 
 import { NewGraffitiComponent } from './new-graffiti/new-graffiti.component';
 
@@ -40,12 +39,10 @@ import { FilePath } from '@ionic-native/file-path/ngx';
     HTTP,
     MapsProviderService,
     JsMapsProviderService,
-    NativeMapsProviderService,
     Camera,
     FileTransfer,
     FilePath,
-    Crop,
-
+    Crop
   ],
   bootstrap: [AppComponent]
 })
