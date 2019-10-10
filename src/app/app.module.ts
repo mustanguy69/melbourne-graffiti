@@ -19,6 +19,7 @@ import { NativeMapsProviderService } from './native-maps-provider.service';
 import { NewGraffitiComponent } from './new-graffiti/new-graffiti.component';
 
 import { Camera } from '@ionic-native/camera/ngx';
+import { Crop } from '@ionic-native/crop/ngx';
 import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 
 
@@ -30,7 +31,7 @@ import { FilePath } from '@ionic-native/file-path/ngx';
 @NgModule({
   declarations: [AppComponent, NewGraffitiComponent],
   entryComponents: [NewGraffitiComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, HttpClientModule],
+  imports: [BrowserModule, IonicModule.forRoot({backButtonText: 'Retour',scrollPadding: false,scrollAssist: true}), AppRoutingModule, FormsModule, HttpClientModule],
   providers: [
     StatusBar,
     SplashScreen,
@@ -42,7 +43,8 @@ import { FilePath } from '@ionic-native/file-path/ngx';
     NativeMapsProviderService,
     Camera,
     FileTransfer,
-    FilePath
+    FilePath,
+    Crop,
 
   ],
   bootstrap: [AppComponent]

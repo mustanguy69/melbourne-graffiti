@@ -5,6 +5,7 @@ import { MapsProviderService } from '../maps-provider.service';
 
 import { NewGraffitiComponent } from '../new-graffiti/new-graffiti.component';
 
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -17,11 +18,17 @@ export class HomePage {
     longitude: number
   };
 
+  markers: any = [];
+  map: any;
+
   @ViewChild('map', {static: true}) private mapElement: ElementRef;
 
-  constructor(public navCtrl: NavController, public geolocation: Geolocation, public mapsProvider: MapsProviderService, private popoverController: PopoverController, private events: Events) {
-
-  }
+  constructor(
+      public navCtrl: NavController,
+      public geolocation: Geolocation,
+      public mapsProvider: MapsProviderService,
+      private popoverController: PopoverController,
+      private events: Events) {}
 
   ngOnInit() {
     this.findUserLocation();
@@ -41,7 +48,7 @@ export class HomePage {
         longitude: position.coords.longitude
       };
 
-      this.mapsProvider.init(position, this.mapElement);
+      this.map = this.mapsProvider.init(position, this.mapElement);
 
     });
 
@@ -59,10 +66,12 @@ export class HomePage {
         cssClass: 'popover_class',
       });
 
-      /** Sync event from popover component */
-      this.events.subscribe('fromPopoverEvent', () => {
-        //this.syncTasks();
+      popover.onDidDismiss()
+      .then((result) => {
+        console.log('test')
+        this.mapsProvider.getMarkers(this.map);
       });
+
       return await popover.present();
   }
 
