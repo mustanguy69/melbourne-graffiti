@@ -16,6 +16,7 @@ import { MapsProviderService } from './maps-provider.service';
 import { JsMapsProviderService } from './js-maps-provider.service';
 
 import { NewGraffitiComponent } from './new-graffiti/new-graffiti.component';
+import { ShowGraffitiComponent } from './show-graffiti/show-graffiti.component';
 
 import { Camera } from '@ionic-native/camera/ngx';
 import { Crop } from '@ionic-native/crop/ngx';
@@ -28,8 +29,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { FilePath } from '@ionic-native/file-path/ngx';
 
 @NgModule({
-  declarations: [AppComponent, NewGraffitiComponent],
-  entryComponents: [NewGraffitiComponent],
+  declarations: [AppComponent, NewGraffitiComponent, ShowGraffitiComponent],
+  entryComponents: [NewGraffitiComponent, ShowGraffitiComponent],
   imports: [BrowserModule, IonicModule.forRoot({backButtonText: 'Retour',scrollPadding: false,scrollAssist: true}), AppRoutingModule, FormsModule, HttpClientModule],
   providers: [
     StatusBar,

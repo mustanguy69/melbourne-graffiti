@@ -1,0 +1,149 @@
+ion-content .popup {
+    .header {
+      background-color: #023E58;
+      color: white;
+      text-align: center;
+      padding: 8px;
+      h4 {
+        margin-top: 5px;
+        margin-bottom: 5px;
+      }
+
+      .cancel-btn {
+        position: absolute;
+        right: 10px;
+        top: 14px;
+        width: 20px;
+      }
+    }
+    .body {
+      padding-left: 22px;
+      padding-right: 22px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+
+      ion-button {
+        display: block;
+        margin-top: 20px;
+      }
+      .error {
+        color: red;
+        text-align: center;
+      }
+
+      .dummy-positioning {
+        width: 100%;
+        margin-top: 15px;
+        margin-bottom: 20px;
+        align-items: center;
+        justify-content: center;
+      }
+
+
+    // The icon specifics
+    // Variables
+    $green:     #4cc93f;
+    $icon-base-size: 12px;
+
+    // Structure
+    .success-icon {
+      margin: 0 auto;
+      display: block;
+      width: 8em;
+      height: 8em;
+      font-size: $icon-base-size;
+      border-radius: 50%;
+      border: 4px solid lighten($green, 20%);
+      background-color: #fff;
+      position: relative;
+      overflow: hidden;
+      transform-origin: center;
+      animation: showSuccess 180ms ease-in-out;
+      transform: scale(1);
+    }
+
+    // Elements
+    .success-icon {
+        &__tip,
+        &__long {
+          display: block;
+          position: absolute;
+          height: 4px;
+          background-color: lighten($green, 20%);
+          border-radius: 10px;
+        }
+
+        &__tip {
+          width: 2.4em;
+          top: 4.3em;
+          left: 1.4em;
+          transform: rotate(45deg);
+          animation: tipInPlace 300ms ease-in-out;
+          animation-fill-mode: forwards;
+          animation-delay: 180ms;
+          visibility: hidden;
+        }
+
+        &__long {
+          width: 4em;
+          transform: rotate(-45deg);
+          top: 3.70em;
+          left: 2.75em;
+          animation: longInPlace 140ms ease-in-out;
+          animation-fill-mode: forwards;
+          visibility: hidden;
+          animation-delay: 300ms + 140ms;
+        }
+      }
+
+      .success {
+        text-align: center;
+      }
+    }
+}
+
+@keyframes showSuccess {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+@keyframes tipInPlace {
+    from {
+        width: 0em;
+        top: 0em;
+        left: -1.6em;
+    }
+    to {
+        width: 2.4em;
+        top: 4.3em;
+        left: 1.4em;
+        visibility: visible;
+    }
+}
+
+@keyframes longInPlace {
+    from {
+        width: 0em;
+        top: 5.1em;
+        left: 3.2em;
+    }
+    to {
+        width: 4em;
+        top: 3.70em;
+        left: 2.75em;
+        visibility: visible;
+    }
+  }
+
+.popup input {
+    border: 1px solid black;
+    margin-bottom: 8px;
+}
+
+.popup ion-button {
+  text-align: center;
+}
