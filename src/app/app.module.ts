@@ -19,6 +19,7 @@ import { NewGraffitiComponent } from './new-graffiti/new-graffiti.component';
 import { ShowGraffitiComponent } from './show-graffiti/show-graffiti.component';
 
 import { Camera } from '@ionic-native/camera/ngx';
+import { Keyboard } from '@ionic-native/keyboard/ngx';
 import { Crop } from '@ionic-native/crop/ngx';
 import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 
@@ -27,11 +28,12 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { FilePath } from '@ionic-native/file-path/ngx';
+import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 
 @NgModule({
   declarations: [AppComponent, NewGraffitiComponent, ShowGraffitiComponent],
   entryComponents: [NewGraffitiComponent, ShowGraffitiComponent],
-  imports: [BrowserModule, IonicModule.forRoot({backButtonText: 'Retour',scrollPadding: false,scrollAssist: true}), AppRoutingModule, FormsModule, HttpClientModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, HttpClientModule],
   providers: [
     StatusBar,
     SplashScreen,
@@ -43,7 +45,9 @@ import { FilePath } from '@ionic-native/file-path/ngx';
     Camera,
     FileTransfer,
     FilePath,
-    Crop
+    Crop,
+    Keyboard,
+    Diagnostic,
   ],
   bootstrap: [AppComponent]
 })

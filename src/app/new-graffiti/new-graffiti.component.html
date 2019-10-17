@@ -1,22 +1,22 @@
-<ion-content>
+<ion-content [scrollEvents]="true">
   <div class="popup">
     <div class="header">
         <h4 *ngIf="status == 0">Add a new graffiti</h4>
         <h4 *ngIf="status == 1">Success !</h4>
         <img src="../../assets/icon/cancel.svg" class="cancel-btn" (click)="closeNewGraffiti()"/>
     </div>
-    <div class="body">
+    <div class="body" scrollX="true">
       <div *ngIf="status == 0">
         <p>Are you in front of a new grafiti ? Register-it now ;)</p>
         <p *ngIf="error" class="error">{{error}}</p>
-        <img *ngIf="base64Image" [src]="base64Image"/>
-        <ion-button *ngIf="!base64Image" color="medium" size="large" (click)="cropUpload()">
+        <img *ngIf="base64Image"  class='uploaded-photo' [src]="base64Image"/>
+        <ion-button *ngIf="!base64Image" class="upload-btn" color="medium" size="large" (click)="cropUpload()">
           <ion-icon slot="icon-only" name="camera"></ion-icon>
         </ion-button>
 
         <ion-input [(ngModel)]="name" placeholder="Name of the graffiti"></ion-input>
         <ion-input [(ngModel)]="artist" placeholder="Artist of the graffiti"></ion-input>
-        <ion-textarea [(ngModel)]="description" rows="3" placeholder="Description of the graffiti"></ion-textarea>
+        <ion-input [(ngModel)]="description" placeholder="Description of the graffiti"></ion-input>
         <ion-button (click)="createNewGrafiti()" type="submit">Send</ion-button>
       </div>
       <div *ngIf="status == 1" class="success">
@@ -27,8 +27,9 @@
             </div>
           </div>
           <h3>Many thanks !</h3>
-          <h3>Your graffiti have been well sent !</h3>
-          <p>Our team will review your application ASAP</p>
+          <br>
+          <h4>Your graffiti have been well sent !</h4>
+<!--          <p>Our team will review your application ASAP</p>-->
       </div>
     </div>
   </div>

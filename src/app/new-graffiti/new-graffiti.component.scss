@@ -21,11 +21,28 @@ ion-content .popup {
       padding-right: 22px;
       padding-top: 10px;
       padding-bottom: 10px;
+      overflow-y: auto;
 
       ion-button {
         display: block;
         margin-top: 20px;
       }
+
+      ion-input {
+        margin-bottom: 8px;
+      }
+
+      .upload-btn, .uploaded-photo {
+        height: 150px;
+        width: 150px;
+        margin: 0 auto;
+        margin-bottom: 20px;
+        border-radius: 4px;
+        text-align: center;
+        display: block;
+      }
+
+
       .error {
         color: red;
         text-align: center;
@@ -139,11 +156,10 @@ ion-content .popup {
     }
   }
 
-.popup input {
-    border: 1px solid black;
-    margin-bottom: 8px;
-}
-
 .popup ion-button {
   text-align: center;
+  z-index: 1;
+}
+.backdrop-no-scroll ion-content {
+  --overflow: visible;
 }

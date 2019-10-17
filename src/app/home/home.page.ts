@@ -1,9 +1,11 @@
-import { Component, ViewChild, ElementRef, HostListener } from '@angular/core';
-import { NavController, PopoverController, Events } from '@ionic/angular';
+import { Component, ViewChild, ElementRef, HostListener, AfterContentInit, OnInit } from '@angular/core';
+import {NavController, PopoverController, Events, Platform} from '@ionic/angular';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { MapsProviderService } from '../maps-provider.service';
 
 import { NewGraffitiComponent } from '../new-graffiti/new-graffiti.component';
+import { Keyboard } from '@ionic-native/keyboard/ngx';
+import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 
 
 @Component({
@@ -11,7 +13,7 @@ import { NewGraffitiComponent } from '../new-graffiti/new-graffiti.component';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit, AfterContentInit {
 
   location: {
     latitude: number,
@@ -24,55 +26,57 @@ export class HomePage {
   @ViewChild('map', {static: true}) private mapElement: ElementRef;
 
   constructor(
-      public navCtrl: NavController,
       public geolocation: Geolocation,
       public mapsProvider: MapsProviderService,
       private popoverController: PopoverController,
-      private events: Events) {}
+      public keyboard: Keyboard,
+      public platform: Platform,
+      public diagnostic: Diagnostic) {}
 
-  ngOnInit() {
-    this.findUserLocation();
+  ngOnInit(): void {
   }
 
-  findUserLocation(){
-    let options = {
+  ngAfterContentInit(): void  {
+    this.platform.ready().then(() => {
+      this.loadMap();
+    });
+  }
+
+  loadMap() {
+    this.map = this.mapsProvider.init(this.mapElement);
+    const options = {
       enableHighAccuracy: true,
       timeout: 25000
     };
-
-    //LocationService.getMyLocation().then((myLocation: MyLocation) => {
-    this.geolocation.getCurrentPosition(options).then((position) => {
-
-      this.location = {
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude
-      };
-
-      this.map = this.mapsProvider.init(position, this.mapElement);
-
+    this.diagnostic.isLocationEnabled().then((isEnabled) => {
+      if (isEnabled === true) {
+        this.geolocation.getCurrentPosition(options).then((position) => {
+          this.location = {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+          };
+        });
+      }
+    }).catch((e) => {
+      console.log('location problem');
     });
-
-    this.geolocation.watchPosition(options).subscribe((position) => {
-      this.mapsProvider.moveMarker(position);
-    })
   }
 
 
-  async popNewGraffiti(ev: any) {
+   async popNewGraffiti() {
       const popover = await this.popoverController.create({
         component: NewGraffitiComponent,
-        event: ev,
         componentProps: { lat: this.location.latitude, lng: this.location.longitude  },
         cssClass: 'popover_class',
       });
 
       popover.onDidDismiss()
-      .then((result) => {
-        console.log('test')
-        this.mapsProvider.getMarkers(this.map);
-      });
+          .then(() => {
+            this.mapsProvider.getMarkers(this.map);
+          });
 
       return await popover.present();
+
   }
 
 }

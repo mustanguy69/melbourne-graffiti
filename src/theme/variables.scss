@@ -10,6 +10,17 @@
 	   --width: 85%;
   }
 
+  body.keyboard-is-open {
+    .popup {
+      .body {
+        margin-top: -220px;
+      }
+      ion-button.upload-btn, .uploaded-photo {
+        visibility: hidden !important;
+      }
+    }
+  }
+
   .gmnoprint {
     display: none !important;
   }

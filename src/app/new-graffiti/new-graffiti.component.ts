@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { PopoverController, NavParams, Events, Platform, LoadingController , NavController } from '@ionic/angular';
-import { OpenNativeSettings } from '@ionic-native/open-native-settings/ngx';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
@@ -9,6 +8,7 @@ import { Crop } from '@ionic-native/crop/ngx';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { MapsProviderService } from '../maps-provider.service';
+import { Keyboard } from '@ionic-native/keyboard/ngx';
 
 declare let window: any;
 
@@ -20,7 +20,6 @@ declare let window: any;
 export class NewGraffitiComponent implements OnInit {
   page;
   base64Image: SafeResourceUrl;
-  respData: any;
   name: string;
   artist: string;
   description: string;
@@ -44,21 +43,38 @@ export class NewGraffitiComponent implements OnInit {
     private filePath: FilePath,
     private loadingController: LoadingController,
     private crop: Crop,
-    public mapsProvider: MapsProviderService) {
+    public keyboard: Keyboard) {
       this.lat = this.navParams.data.lat;
       this.lng = this.navParams.data.lng;
+
+      platform.ready().then(() => {
+      this.keyboard.onKeyboardShow().subscribe(() => {
+        document.body.classList.add('keyboard-is-open');
+        this.movePopupFromContainerList(document.getElementsByClassName('popup'), true);
+      });
+
+      this.keyboard.onKeyboardHide().subscribe(() => {
+        document.body.classList.remove('keyboard-is-open');
+      });
+    });
   }
 
   ngOnInit() {
-    //Get data from popover page
+    // Get data from popover page
     this.page = this.navParams.get('data');
   }
 
+  movePopupFromContainerList(list, up) {
+    if (list.length) {
+      const popup = list[0].childNodes[0];
+      popup.style.bottom = up ? '130px' : '0px';
+    }
+  }
+
   cropUpload() {
-    var options = {
+    const options = {
       quality: 70,
       destinationType: this.camera.DestinationType.FILE_URI,
-      //sourceType: sourceType,
       saveToPhotoAlbum: true,
       correctOrientation: true,
       encodingType: this.camera.EncodingType.JPEG,
@@ -67,7 +83,7 @@ export class NewGraffitiComponent implements OnInit {
     };
 
     this.camera.getPicture(options).then((imageData) => {
-      this.crop.crop(imageData, {quality: 70})
+      this.crop.crop(imageData, {quality: 40})
       .then(
         (newImage) => {
           this.base64Image = window.Ionic.WebView.convertFileSrc(newImage);
@@ -75,40 +91,35 @@ export class NewGraffitiComponent implements OnInit {
         },
         (error) => {console.error('Error cropping image', error);}
       );
-
-
     }, (err) => {
       console.log(err);
     });
   }
 
   async createNewGrafiti() {
-
     this.showLoader();
     // Destination URL
-    let url = 'http://139.99.97.36:8080/api/graffiti';
+    const url = 'http://139.99.97.36:8080/api/graffiti';
 
     // File for Upload
-    var targetPath = this.photo;
+    const targetPath = this.photo;
 
-    let postData = {
-        "name": this.name,
-        "artist": this.artist,
-        "description": this.description,
-        "lat": this.lat,
-        "lng": this.lng,
-    }
+    const postData = {
+        name: this.name,
+        artist: this.artist,
+        description: this.description,
+        lat: this.lat,
+        lng: this.lng,
+    };
 
-    var options: FileUploadOptions = {
+    const options: FileUploadOptions = {
       fileKey: 'file',
       chunkedMode: false,
       mimeType: 'multipart/form-data',
       params: postData
     };
 
-    let fileTransfer: FileTransferObject = this.transfer.create();
-
-
+    const fileTransfer: FileTransferObject = this.transfer.create();
 
     fileTransfer.upload(targetPath, url, options)
     .then((res) => {
@@ -116,7 +127,7 @@ export class NewGraffitiComponent implements OnInit {
       console.log(res);
     }).catch((error) => {
       console.log(error);
-      this.error = "Something wrong happened, try again !";
+      this.error = 'Something wrong happened, try again !';
 
     }).finally(() => { this.hideLoader(); });
   }
@@ -130,21 +141,14 @@ export class NewGraffitiComponent implements OnInit {
         console.log('Loading dismissed!');
       });
     });
-    //this.hideLoader();
+    // this.hideLoader();
   }
 
   hideLoader() {
       this.loadingController.dismiss();
   }
 
-  eventFromPopover() {
-    this.events.publish('fromPopoverEvent');
-    this.popoverController.dismiss();
-  }
-
   closeNewGraffiti() {
     this.popoverController.dismiss();
   }
-
-
 }

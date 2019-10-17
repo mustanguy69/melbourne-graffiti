@@ -1,11 +1,11 @@
 <ion-content>
   <div class="popup">
-    <div class="header">
-
-    </div>
+    <img src="../../assets/icon/cancel.svg" class="cancel-btn" (click)="closeShowGraffiti()"/>
+    <img src="{{photo}}" class="photo"/>
     <div class="body">
-
-
+      <h4>{{name}}</h4>
+      <i>{{artist}}</i>
+      <p>{{description}}</p>
     </div>
   </div>
 </ion-content>
