@@ -6,6 +6,7 @@ import { MapsProviderService } from '../maps-provider.service';
 import { NewGraffitiComponent } from '../new-graffiti/new-graffiti.component';
 import { Keyboard } from '@ionic-native/keyboard/ngx';
 import { Diagnostic } from '@ionic-native/diagnostic/ngx';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 
 
 @Component({
@@ -31,14 +32,15 @@ export class HomePage implements OnInit, AfterContentInit {
       private popoverController: PopoverController,
       public keyboard: Keyboard,
       public platform: Platform,
-      public diagnostic: Diagnostic) {}
+      public diagnostic: Diagnostic,
+      public splashscreen: SplashScreen) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void{
   }
-
   ngAfterContentInit(): void  {
     this.platform.ready().then(() => {
       this.loadMap();
+      this.splashscreen.hide();
     });
   }
 
