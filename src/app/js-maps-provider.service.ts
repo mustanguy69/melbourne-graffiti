@@ -281,7 +281,7 @@ export class JsMapsProviderService {
     ];
 
     const opts = {
-      zoom: 15,
+      zoom: 17,
       tilt: 0,
       styles: myStyles,
       disableDefaultUI: true

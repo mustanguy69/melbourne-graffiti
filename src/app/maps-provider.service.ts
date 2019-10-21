@@ -37,45 +37,34 @@ export class MapsProviderService {
       enableHighAccuracy: true,
       timeout: 25000
     };
-    this.diagnostic.isLocationAuthorized().then((isEnabled) => {
-      if (isEnabled) {
-        // this.diagnostic.requestLocationAuthorization().then((status) => {
-          console.log('Authorization status is now: ' + status);
-          this.geolocation.getCurrentPosition(options).then((position) => {
-            this.location = {
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude
-            };
+    this.geolocation.getCurrentPosition(options).then((position) => {
+      this.location = {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude
+      };
 
-            this.latLng = new google.maps.LatLng(this.location.latitude, this.location.longitude);
-            map.setCenter(this.latLng);
-            const iconJs = {
-              url: '../../assets/icon/dot-and-circle.png', // url
-              scaledSize: new google.maps.Size(25, 25), // scaled size
-            };
+      this.latLng = new google.maps.LatLng(this.location.latitude, this.location.longitude);
+      map.setCenter(this.latLng);
+      const iconJs = {
+        url: '../../assets/icon/dot-and-circle.png', // url
+        scaledSize: new google.maps.Size(25, 25), // scaled size
+      };
 
-            this.marker = new google.maps.Marker({
-              position: this.latLng,
-              optimized: false,
-              visible: true,
-              icon: iconJs,
-            });
+      this.marker = new google.maps.Marker({
+        position: this.latLng,
+        optimized: false,
+        visible: true,
+        icon: iconJs,
+      });
 
-            this.marker.setMap(map);
+      this.marker.setMap(map);
 
-            this.geolocation.watchPosition(options).subscribe((position2) => {
-              this.moveMarker(position2);
-            });
+      this.geolocation.watchPosition(options).subscribe((position2) => {
+        this.moveMarker(position2);
+      });
 
-            this.getMarkers(map);
+      this.getMarkers(map);
 
-          });
-        // }).catch((e) => {
-        //   console.log(e);
-        // });
-      }
-    }).catch((e) => {
-      console.log('location problem');
     });
   }
 

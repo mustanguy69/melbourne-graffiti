@@ -37,9 +37,22 @@ export class HomePage implements OnInit, AfterContentInit {
 
   ngOnInit(): void{
   }
+
   ngAfterContentInit(): void  {
     this.platform.ready().then(() => {
-      this.loadMap();
+      this.diagnostic.isLocationAuthorized().then((isEnabled) => {
+        if (isEnabled === true) {
+          this.loadMap();
+        } else {
+          this.diagnostic.requestLocationAuthorization().then((status) => {
+            this.loadMap();
+          }).catch((e) => {
+            console.log('location problem 4');
+          });
+        }
+      }).catch((e) => {
+        console.log('location problem 3');
+      });
       this.splashscreen.hide();
     });
   }
@@ -50,20 +63,13 @@ export class HomePage implements OnInit, AfterContentInit {
       enableHighAccuracy: true,
       timeout: 25000
     };
-    this.diagnostic.isLocationEnabled().then((isEnabled) => {
-      if (isEnabled === true) {
-        this.geolocation.getCurrentPosition(options).then((position) => {
-          this.location = {
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude
-          };
-        });
-      }
-    }).catch((e) => {
-      console.log('location problem');
+    this.geolocation.watchPosition(options).subscribe((position) => {
+      this.location = {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude
+      };
     });
   }
-
 
    async popNewGraffiti() {
       const popover = await this.popoverController.create({
