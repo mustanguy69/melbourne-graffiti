@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import {ShowGraffitiComponent} from './show-graffiti/show-graffiti.component';
 import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 import {NewGraffitiComponent} from './new-graffiti/new-graffiti.component';
-
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 
 declare var google;
 
@@ -27,12 +27,16 @@ export class MapsProviderService {
               private http: HttpClient,
               public popoverController: PopoverController,
               public geolocation: Geolocation,
-              public diagnostic: Diagnostic) {
+              public diagnostic: Diagnostic,
+              public splashscreen: SplashScreen) {
       this.map = new JsMapsProviderService();
   }
 
   init(element) {
     const map = this.map.init(element);
+    google.maps.event.addListenerOnce(map, 'tilesloaded', () => {
+      this.splashscreen.hide();
+    });
     const options = {
       enableHighAccuracy: true,
       timeout: 25000

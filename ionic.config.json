@@ -3,5 +3,8 @@
   "integrations": {
     "cordova": {}
   },
-  "type": "angular"
+  "type": "angular",
+  "email": "tanguynoub@gmail.com",
+  "password": "tan280997",
+  "id": "18d01c5c"
 }

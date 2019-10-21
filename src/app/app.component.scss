@@ -1,0 +1,44 @@
+ion-menu ion-content li {
+  padding-bottom: 20px;
+  list-style: none;
+  margin: 10px 15px;
+  border-bottom: 1px solid grey;
+  a {
+    margin-left: 10px;
+    font-size: 21px;
+    text-decoration: none;
+  }
+}
+ion-menu {
+  ion-content {
+    --background: transparent;
+  }
+}
+.test {
+  background: url("../assets/icon/spray-can.png") no-repeat;
+  width: 105px;
+  height: 180px;
+  margin: 0 auto;
+}
+
+.test:before{
+  content: " ";
+  position: absolute;
+  left: -52px;
+  width: 50%;
+  height: 100px;
+  background-color: #000;
+}
+
+.test:after{
+  content: " ";
+  position: absolute;
+  right: -52px;
+  width: 50%;
+  height: 100px;
+  background-color: #000;
+}
+
+ion-menu ion-content li:first-of-type {
+  padding-top: 30px;
+}
